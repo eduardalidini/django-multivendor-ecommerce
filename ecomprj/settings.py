@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     #Custom apps
     'core',
+    'userauths',
 ]
 
 MIDDLEWARE = [
@@ -141,3 +142,6 @@ JAZZMIN_SETTINGS = {
     "login_logo": "assets/images/food-mart-animated-led-sign.gif",
     "copyright": "FoodMart.com",
 }
+
+
+AUTH_USER_MODEL = 'userauths.User'
