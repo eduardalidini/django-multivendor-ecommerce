@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',              
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -132,3 +133,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+JAZZMIN_SETTINGS = {
+    "site_header": "FoodMart",
+    "site_brand": "FoodMart",
+    "site_logo": "assets/images/food-mart-animated-led-sign.gif", 
+    "login_logo": "assets/images/food-mart-animated-led-sign.gif",
+    "copyright": "FoodMart.com",
+}
