@@ -1,0 +1,64 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="padding-large">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-8 col-sm-10 mx-auto">
+
+                <h2 class="section-title text-center mb-4">Login</h2>
+
+                {% if messages %}
+                <div class="alert alert-warning">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <form action="" method="POST">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" name="email" class="form-control" required placeholder="Enter your email">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                         <input type="password" name="password" class="form-control" required placeholder="Enter your password">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg w-100 mt-3">Login</button>
+                </form>
+
+                <p class="text-center mt-3">
+                    Don't have an account? <a href="{% url 'userauths:sign-up' %}">Sign Up</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    form input[type="text"],
+    form input[type="password"],
+    form input[type="email"] {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212529;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+    }
+</style>
+
+{% endblock content %}
