@@ -218,7 +218,12 @@
                                 {% if request.user.is_authenticated %}
                                     <li><a class="dropdown-item" href="#">My Account</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item text-danger" href="{% url 'userauths:sign-out' %}">Sign Out</a></li>
+                                    <li>
+                                        <form action="{% url 'userauths:sign-out' %}" method="POST" style="display: inline;">
+                                            {% csrf_token %}
+                                            <button type="submit" class="dropdown-item text-danger border-0 bg-transparent">Sign Out</button>
+                                        </form>
+                                    </li>
                                 {% else %}
                                     <li><a class="dropdown-item" href="{% url 'userauths:sign-in' %}">Sign In</a></li>
                                     <li><a class="dropdown-item" href="{% url 'userauths:sign-up' %}">Register</a></li>
@@ -338,6 +343,17 @@
             </div>
         </div>
     </header>
+
+    <div class="container mt-3">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
 
     {% block content %}{% endblock %}
 
@@ -511,6 +527,12 @@
     <script src="{% static 'assets/js/plugins.js' %}"></script>
     <script src="{% static 'assets/js/script.js' %}"></script>
     
+    <script>
+        setTimeout(function(){
+            $('.alert').alert('close');
+        }, 3000); 
+    </script>
+
     {% block extra_js %}{% endblock %}
 </body>
 
