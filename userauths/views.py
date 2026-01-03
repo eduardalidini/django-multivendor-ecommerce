@@ -49,6 +49,9 @@ def login_view(request):
 
     return render(request, 'userauths/sign-in.html')
 
+from django.views.decorators.http import require_http_methods
+
+@require_http_methods(["POST"])
 def logout_view(request):
     logout(request)
     messages.success(request, "You have been logged out.")
