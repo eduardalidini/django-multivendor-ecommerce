@@ -65,7 +65,7 @@ class Vendor(models.Model):
     days_return = models.CharField(max_length=100, default="100")
     warranty_period = models.CharField(max_length=100, default="100")
 
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    
     date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     class Meta:
@@ -131,6 +131,9 @@ class Product(models.Model):
         return self.title
     
     def get_percentage(self):
+        # Prevent division by zero error
+        if self.old_price == 0:
+            return 0
         new_price = (self.price / self.old_price) * 100
         return 100 - new_price
 
@@ -167,6 +170,9 @@ class CartOrderItems(models.Model):
     price = models.DecimalField(max_digits=12, decimal_places=2, default="0.00")
     total = models.DecimalField(max_digits=12, decimal_places=2, default="0.00")
 
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+
+
     class Meta:
         verbose_name_plural = "Cart Order Items"
 
@@ -174,14 +180,18 @@ class ProductReview(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name="reviews")
     review = models.TextField()
-    rating = models.IntegerField(choices=RATING, default=None)
+    rating = models.IntegerField(choices=RATING, default=1)
     date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name_plural = "Product Reviews"
 
     def __str__(self):
-        return self.product.title
+        # Prevent crash if the product was deleted
+        if self.product:
+            return self.product.title
+        else:
+            return "Review (deleted product)"
 
     def get_rating(self):
         return self.rating
