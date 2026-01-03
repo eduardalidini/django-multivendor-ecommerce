@@ -14,6 +14,10 @@ import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
 import dj_database_url
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*hqn4wnp6c8u!ykk8e)4q*u8(enk()(u6*5^ql0n1lh7)0%5x&'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-dev-only-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -90,7 +94,7 @@ WSGI_APPLICATION = 'ecomprj.wsgi.application'
 # }
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://postgres.lxqtcklslexnodwbgivj:%2B%26%3FEb9!%3Fme%2ByDZu@aws-1-eu-central-1.pooler.supabase.com:6543/postgres',
+        default=os.environ.get('DATABASE_URL'), 
         conn_max_age=600
     )
 }
